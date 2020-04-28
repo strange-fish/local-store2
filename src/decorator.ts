@@ -1,13 +1,13 @@
 import { StoreWrapper } from "./storeWrapper"
 import { LocalStoreOptions } from "./options"
-import { getKey, setup } from "./utils"
+import { getKey, setup, isEmpty } from "./utils"
 
 let keyMap = {}
 /**
  * turn class to local store
  * 注意：包装后重复new生成class会导致store原值被默认值覆盖
  */
-export function fromClass(options: LocalStoreOptions)
+export function fromClass(options?: LocalStoreOptions)
 export function fromClass(store: StoreWrapper, options?: LocalStoreOptions)
 export function fromClass(
   first: StoreWrapper | LocalStoreOptions,
@@ -57,7 +57,7 @@ function define(store: StoreWrapper, target: any, key: string, initValue: any, o
       set(value) {
         if (isFirstSet) {
           isFirstSet = false
-          if (options.forceOverride || store.get(storeKey) === undefined) {
+          if (options.forceOverride || isEmpty(store.get(storeKey))) {
             store.set(storeKey, value)
           }
         } else {

@@ -10,7 +10,8 @@
   },
   "typings": "dist/index.d.ts",
   "files": [
-    "dist/*"
+    "dist/*",
+    "README.md"
   ],
   "author": "strange-fish",
   "homepage": "https://github.com/strange-fish/local-store2",

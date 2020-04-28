@@ -18,3 +18,7 @@ export function setup(first: any, second: any) {
   }
   return { store, options }
 }
+
+export function isEmpty (value) {
+  return value === undefined || value === null
+}

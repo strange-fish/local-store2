@@ -1,11 +1,11 @@
 import { StoreWrapper } from "./storeWrapper"
 import { LocalStoreOptions } from "./options"
-import { getKey, setup } from "./utils"
+import { getKey, setup, isEmpty } from "./utils"
 
 type Re = Record<string, any>
 
-export function fromObject<T extends Re> (obj: T, options?: LocalStoreOptions)
-export function fromObject<T extends Re> (obj: T, store?: StoreWrapper, options?: LocalStoreOptions)
+export function fromObject<T extends Re> (obj: T, options?: LocalStoreOptions): T
+export function fromObject<T extends Re> (obj: T, store?: StoreWrapper, options?: LocalStoreOptions): T
 
 export function fromObject<T extends Re> (
   obj: T,
@@ -17,7 +17,7 @@ export function fromObject<T extends Re> (
 
   keyValues.forEach(([k, v]) => {
     const key = getKey(options.prefix, k)
-    if (options.forceOverride || (v !== undefined && store.get(key) === undefined)) {
+    if (options.forceOverride || (v !== undefined && isEmpty(store.get(key)))) {
       store.set(key, v)
     }
 

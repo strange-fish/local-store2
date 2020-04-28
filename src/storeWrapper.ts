@@ -6,9 +6,13 @@ export interface StoreInterface {
 }
 
 function getLocal () {
-  if (globalThis) return globalThis.localStorage
-  if (window) return window.localStorage
-  throw Error(`localStorage doesn't exist!`)
+  const g = global || window || globalThis
+  if (g) {
+    // @ts-ignore
+    return g.localStorage
+  } 
+  console.warn(`localStorage doesn't exist!`)
+  return {}
 }
 
 export class StoreWrapper implements StoreInterface {

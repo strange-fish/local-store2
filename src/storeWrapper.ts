@@ -5,10 +5,16 @@ export interface StoreInterface {
   clear(): void;
 }
 
+function getLocal () {
+  if (globalThis) return globalThis.localStorage
+  if (window) return window.localStorage
+  throw Error(`localStorage doesn't exist!`)
+}
+
 export class StoreWrapper implements StoreInterface {
   private store: Storage
   constructor (store?: Storage) {
-    this.store = store || globalThis.localStorage
+    this.store = store || getLocal()
   }
   get (key: string) {
     const val = this.store.getItem(key)

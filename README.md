@@ -89,6 +89,6 @@ fromObject(obj, store, options)
 ### `options`
 prefix: string = ""  为所有storeKey添加前缀
 
-forceOverride: boolean = false 无视store已存在的内容，强行复写
+forceOverride: boolean = false 无视store已存在的内容，强行覆盖
 
-useProxy: boolean = true 是否使用Proxy, 仅对fromObject起效
+useProxy: boolean = true 是否使用Proxy，仅对fromObject起效

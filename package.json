@@ -1,6 +1,6 @@
 {
   "name": "local-store2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "声明式的使用localStorage",
   "main": "dist/index.js",
   "scripts": {

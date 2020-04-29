@@ -16,8 +16,14 @@ export default {
       browser: true
     }),
   ],
-  output: {
-    file: 'dist/index.js',
-    format: 'es'
-  },
+  output: [
+    {
+      file: 'dist/index.es.js',
+      format: 'es'
+    },
+    {
+      file: 'dist/index.iife.js',
+      format: 'iife'
+    }
+  ]
 }

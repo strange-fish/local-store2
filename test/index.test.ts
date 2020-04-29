@@ -79,6 +79,13 @@ describe("fromClass Test", () => {
     expect(number).toBe(mockStore.get('my_number'))
     expect(number).toBe(4)
   })
+  test(`default value won't override when class new again`, () => {
+    mockStore.clear()
+    const store = new TestStore()
+    store.number = 10
+    const store2 = new TestStore()
+    expect(store.number).toBe(10)
+  })
 })
 
 describe('fromObject Test', () => {

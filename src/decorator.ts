@@ -49,19 +49,23 @@ function define(store: StoreWrapper, target: any, key: string, initValue: any, o
       options.prefix,
       keyMap[key] !== undefined ? keyMap[key] : key
     )
-    let isFirstSet = initValue !== undefined
+    const hasInitValue = initValue !== undefined
     Object.defineProperty(target, key, {
       get() {
         return store.get(storeKey)
       },
       set(value) {
-        if (isFirstSet) {
-          isFirstSet = false
-          if (options.forceOverride || isEmpty(store.get(storeKey))) {
+        const initMap = this.__initMap__ || (this.__initMap__ = {})
+        if (initMap[key]) {
+          store.set(storeKey, value)
+        } else {
+          initMap[key] = true
+          if (
+            options.forceOverride ||
+            (hasInitValue && isEmpty(store.get(storeKey)))
+          ) {
             store.set(storeKey, value)
           }
-        } else {
-          store.set(storeKey, value)
         }
       },
     })

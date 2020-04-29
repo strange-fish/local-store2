@@ -26,7 +26,6 @@ const store = new StoreWrapper(sessionStorage)
 
 会使用属性名存取store内容，当含有默认值且该属性在store中为空时，会对该属性进行赋值。
 
-**注意：重复new该class会导致默认值覆盖**
 ```ts
 import { fromClass } from 'local-store2'
 

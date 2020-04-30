@@ -2,12 +2,13 @@
   "name": "local-store2",
   "version": "0.0.3",
   "description": "声明式的使用localStorage",
-  "main": "dist/index.js",
   "scripts": {
     "build": "node build/clearup.js && rollup -c",
     "test": "jest",
-    "test-c": "jest --coverage"
+    "test-c": "jest --coverage",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
+  "main": "dist/index.es.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist/*",

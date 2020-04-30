@@ -1,30 +1,24 @@
+[中文文档](https://github.com/strange-fish/local-store2/README.zh-CN.md)
+
 ## Local Store2
-声明式的使用`localStorage`或`sessionStorage`
+To use `localStorage` or `sessionStorage` Declarative
 
-解决使用`localStorage`的时候，需要使用各种魔法字符串以及手动格式化内容的问题。
+When using 'localStorage', we need to use various magic strings and manually format the content.
 
-## 安装
+**************
+
+## Install
 ```shell
 npm i local-store2
 ```
 **************
 
-## 使用
-
-
-### `storeWrapper`
-接受一个实现了`Storage`接口的对象, 实现了自动格式化内容的功能, 默认使用`localStorage`
-```ts
-import { StoreWrapper } from 'local-store2'
-
-const store = new StoreWrapper(sessionStorage)
-```
-**************
+## Usage
 
 ### `fromClass`
-使用class作为local store载体, `fromClass`接受一个`storeWrapper`对象，默认使用`defaultStore`。
+Use class as the local store carrier.
 
-会使用属性名存取store内容，当含有默认值且该属性在store中为空时，会对该属性进行赋值。
+The property name will be used to access the store content. When there is a default value and the property is empty in the store, the property will be assigned a value.
 
 ```ts
 import { fromClass } from 'local-store2'
@@ -37,19 +31,10 @@ class Demo {
 const demo = new Demo
 console.log(demo.array)
 ```
-
-`fromClass` 接受最多2个参数
-4种传参方式
-```ts
-fromClass()
-fromClass(store)
-fromClass(options)
-fromClass(store, options)
-```
 **************
 
 ### `key`
-`fromClass`默认使用属性名存取store内容，使用`key`装饰器可以自定义存取的key
+By default, `fromClass` uses the attribute name to access the store content, and the `key` decorator can be used to customize the access key
 ```ts
 @fromClass()
 class Demo {
@@ -63,31 +48,42 @@ console.log(demo.str === store.get('name'))
 **************
 
 ### `fromObject`
-如果不想使用`class`，可以使用`fromObject`
+If you don't want to use `class`, you can use `fromObject`
 ```ts
 import { fromObject } from 'local-store2'
 
 const demo = fromObject({ name: 'z' })
 
-console.log(demo.name === store.get('name'))  
-```
-`fromObject`接受最多3个参数
+console.log(demo.name === store.get('name'))
 
-支持4种传参方式
-```ts
-fromObject(obj)
+const prefixStore = fromObject({ name: 'p' }, { prefix: 'my_' })
 
-fromObject(obj, store)
-
-fromObject(obj, options)
-
-fromObject(obj, store, options)
+console.log(prefixStore.name === store.get('my_name'))
 ```
 **************
 
+### `storeWrapper`
+Accept an object that implements the `Storage` interface, and realize the function of automatically formatting content. By default, `localStorage` is used
+
+```ts
+import { StoreWrapper } from 'local-store2'
+
+const store = new StoreWrapper(sessionStorage)
+```
+**************
+
+### `setGlobalOptions`
+```ts
+import { setGlobalOptions } from 'local-store2'
+
+setGlobalOptions(options)
+```
+
+**************
+
 ### `options`
-prefix: string = ""  为所有storeKey添加前缀
+store: storeWrapper = store used by defaultStore
 
-forceOverride: boolean = false 无视store已存在的内容，强行覆盖
+prefix: String = "" prefix all storeKeys
 
-useProxy: boolean = true 是否使用Proxy，仅对fromObject起效
+forceOverride: Boolean = false ignore the existing content of store and force override

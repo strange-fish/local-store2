@@ -1,4 +1,4 @@
-import { fromClass, key, StoreWrapper, fromObject } from "../src"
+import { fromClass, key, StoreWrapper, fromObject, setGlobalOptions } from "../src"
 import { MockLocalStorage } from "./mockLocalStorage"
 
 //@ts-ignore
@@ -14,7 +14,9 @@ describe("fromClass Test", () => {
   const nil = null
   const storeKey = "one"
 
-  @fromClass(mockStore)
+  setGlobalOptions({ store: mockStore })
+
+  @fromClass()
   class TestStore {
     number = num
     @key(storeKey)
@@ -23,10 +25,10 @@ describe("fromClass Test", () => {
     array = arr
     object: Record<string, any> = obj
     nil = nil
-    un
+    un: any
   }
 
-  @fromClass(mockStore)
+  @fromClass()
   class TestStore2 {
     number = num + 1
   }
@@ -61,7 +63,7 @@ describe("fromClass Test", () => {
   })
   test('when option sets to forceOverride, default value will be set anyway', () => {
     mockStore.set('number', 10)
-    @fromClass(mockStore, { forceOverride: true })
+    @fromClass({ forceOverride: true })
     class TestStore {
       number = 1
     }
@@ -70,7 +72,7 @@ describe("fromClass Test", () => {
   })
   test('can use prefix get/set', () => {
     mockStore.clear()
-    @fromClass(mockStore, { prefix: 'my_' })
+    @fromClass({ prefix: 'my_' })
     class TestStore {
       number = 4
     }
@@ -103,29 +105,24 @@ describe('fromObject Test', () => {
       arr,
       object
     }
-    const store = fromObject(obj, mockStore)
+    const store = fromObject(obj)
     expect(store.number).toBe(number)
     expect(store.arr).toEqual(arr)
     expect(store.object).toEqual(object)
   })
   test(`won't set default value when value has already existed`, () => {
     mockStore.set('number', number)
-    const store = fromObject({ number: number + 1 }, mockStore)
+    const store = fromObject({ number: number + 1 })
     expect(store.number).toBe(number)
   })
   test(`when option sets to forceOverride, default value will be set anyway`, () => {
     mockStore.set('number', 3)
-    const store = fromObject({ number: 2 }, mockStore, { forceOverride: true })
+    const store = fromObject({ number: 2 }, { forceOverride: true })
     expect(store.number).toBe(2)
-  })
-  test('when use defineProperty mode, can get/set', () => {
-    mockStore.clear()
-    const store = fromObject({ number: 3 }, mockStore, { useProxy: false })
-    expect(store.number).toBe(3)
   })
   test('can use prefix get/set', () => {
     mockStore.clear()
-    const store = fromObject({ number: 4 }, mockStore, { prefix: 'my_' })
+    const store = fromObject({ number: 4 }, { prefix: 'my_' })
     const number = store.number
     expect(number).toBe(mockStore.get('my_number'))
     expect(number).toBe(4)

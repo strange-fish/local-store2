@@ -1,5 +1,5 @@
 export class MockLocalStorage implements Partial<Storage> {
-  private static _map: object = {}
+  private static _map: Record<string, any> = {}
   static getItem (key: string): string {
     return this._map[key]
   }

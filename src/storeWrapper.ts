@@ -1,3 +1,5 @@
+import { isEmpty } from "./utils"
+
 export interface StoreInterface {
   get(key: string): any;
   set(key: string, value: any): void;
@@ -6,13 +8,13 @@ export interface StoreInterface {
 }
 
 function getLocal () {
-  const g = global || window || globalThis
+  const g = window || global || globalThis
   if (g) {
     // @ts-ignore
     return g.localStorage
   } 
   console.warn(`localStorage doesn't exist!`)
-  return {}
+  return {} as Storage
 }
 
 export class StoreWrapper implements StoreInterface {
@@ -22,10 +24,10 @@ export class StoreWrapper implements StoreInterface {
   }
   get (key: string) {
     const val = this.store.getItem(key)
-    if (val === undefined) return val
+    if (isEmpty(val)) return val
     
     try {
-      return JSON.parse(val)
+      return JSON.parse(val as string)
     } catch {
       return val
     }
@@ -39,6 +41,6 @@ export class StoreWrapper implements StoreInterface {
   clear (): void {
     this.store.clear()
   }
-}
+}  
 
 export const defaultStore = new StoreWrapper()

@@ -22,7 +22,7 @@ export default {
       format: 'es'
     },
     {
-      file: 'dist/index.iife.js',
+      file: 'dist/umd.js',
       format: 'iife'
     }
   ]

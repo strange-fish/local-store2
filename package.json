@@ -1,6 +1,6 @@
 {
   "name": "local-store2",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "声明式的使用localStorage",
   "scripts": {
     "build": "node build/clearup.js && rollup -c",

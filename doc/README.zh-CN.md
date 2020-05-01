@@ -31,11 +31,16 @@ console.log(demo.array)
 
 ### `key`
 `fromClass`默认使用属性名存取store内容，使用`key`装饰器可以自定义存取的key
+
+**注意，如果属性没有默认值，需要使用*key*去标记该属性**
 ```ts
 @fromClass()
 class Demo {
   @key('name')
   str: string = ''
+
+  @key()
+  undefine: any
 }
 
 const demo = new Demo

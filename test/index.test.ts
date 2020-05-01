@@ -25,6 +25,7 @@ describe("fromClass Test", () => {
     array = arr
     object: Record<string, any> = obj
     nil = nil
+    @key()
     un: any
   }
 
@@ -50,8 +51,8 @@ describe("fromClass Test", () => {
     }
     store.object = val
     store.un = 'un'
-    expect(store.object).toEqual(val)
-    expect(store.un).toBe('un')
+    expect(store.object).toEqual(mockStore.get('object'))
+    expect(store.un).toBe(mockStore.get('un'))
   })
   test("with key decorator, storage can use different store key", () => {
     expect(store.number2).toBe(mockStore.get(storeKey))

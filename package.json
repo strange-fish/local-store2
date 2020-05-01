@@ -6,6 +6,7 @@
     "build": "node build/clearup.js && rollup -c",
     "test": "jest",
     "test-c": "jest --coverage",
+    "init-cz": "commitizen init cz-conventional-changelog --save-dev --save-exact",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "main": "dist/index.es.js",

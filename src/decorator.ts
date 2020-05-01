@@ -24,20 +24,22 @@ export function fromClass(options?: Partial<LocalStoreOptions>) {
           prefix,
           keyMap[key] !== undefined ? keyMap[key] : key
         )
-        const hasInitValue = initValue !== undefined
+        const doNotHaveInitValue = initValue === undefined
         Object.defineProperty(target.prototype, key, {
           get() {
             return store.get(storeKey)
           },
           set(value) {
             const initMap = this[INIT_MAP_KEY] || (this[INIT_MAP_KEY] = {})
+
             if (initMap[key]) {
               store.set(storeKey, value)
             } else {
               initMap[key] = true
               if (
-                forceOverride ||
-                (hasInitValue && isEmpty(store.get(storeKey)))
+                forceOverride || 
+                doNotHaveInitValue ||
+                isEmpty(store.get(storeKey))
               ) {
                 store.set(storeKey, value)
               }

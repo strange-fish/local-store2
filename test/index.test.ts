@@ -45,14 +45,11 @@ describe("fromClass Test", () => {
     expect(store.un).toBe(void 0)
   })
   test("can set value", () => {
-    const val = {
-      one: 1,
-      two: [1, 2],
-    }
-    store.object = val
-    store.un = 'un'
-    expect(store.object).toEqual(mockStore.get('object'))
-    expect(store.un).toBe(mockStore.get('un'))
+    const key = 'un'
+    mockStore.set(key, 'test')
+    store.un = 'st'
+    expect(store.un).toBe(mockStore.get(key))
+    expect(mockStore.get(key)).toBe('st')
   })
   test("with key decorator, storage can use different store key", () => {
     expect(store.number2).toBe(mockStore.get(storeKey))

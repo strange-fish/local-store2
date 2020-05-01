@@ -7,18 +7,18 @@ const INIT_MAP_KEY = Symbol('init_map')
  * turn class to local store
  */
 export function fromClass(options?: Partial<LocalStoreOptions>) {
-  let ran = false
   const turn: ClassDecorator = (target: any) => {
-    if (ran) return
-    ran = true
-    const raw = Object.entries(new target())
+    
     const { store, forceOverride, prefix } = {
       ...getGlobalOptions(),
       ...options
     }
+    const rawClass = new target()
     const keyMap = target.prototype[KEY_MAP_KEY] || {}
+    const keys = dedupeKeys(rawClass, keyMap)
 
-    raw.forEach(([key, initValue]) => {
+    keys.forEach(key => {
+      const initValue = rawClass[key]
       if (typeof initValue !== "function") {
         const storeKey = getKey(
           prefix,
@@ -53,7 +53,7 @@ export function fromClass(options?: Partial<LocalStoreOptions>) {
  * set the storage key of field
  * @param newK storage key
  */
-export const key = (newK: string) => {
+export const key = (newK?: string) => {
   const changeKey: PropertyDecorator = (target, oldK) => {
     if (typeof oldK === "string") {
       // @ts-ignore
@@ -62,4 +62,14 @@ export const key = (newK: string) => {
     }
   }
   return changeKey
+}
+
+function dedupeKeys (...args: object[]) {
+  const keyMap: Record<string, boolean> = {}
+  for (const m of args) {
+    for (const k in m) {
+      keyMap[k] = true
+    }
+  }
+  return Object.keys(keyMap)
 }

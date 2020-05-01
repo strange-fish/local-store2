@@ -1,4 +1,4 @@
-[中文文档](https://github.com/strange-fish/local-store2/README.zh-CN.md)
+[中文文档](./doc/README.zh-CN.md)
 
 ## Local Store2
 To use `localStorage` or `sessionStorage` Declarative
@@ -35,11 +35,16 @@ console.log(demo.array)
 
 ### `key`
 By default, `fromClass` uses the attribute name to access the store content, and the `key` decorator can be used to customize the access key
+
+**Note that if the attribute does not have a default value, you need to use * key * to mark the attribute**
 ```ts
 @fromClass()
 class Demo {
   @key('name')
   str: string = ''
+
+  @key()
+  undefine: any
 }
 
 const demo = new Demo
@@ -82,8 +87,18 @@ setGlobalOptions(options)
 **************
 
 ### `options`
-store: storeWrapper = store used by defaultStore
 
-prefix: String = "" prefix all storeKeys
+```ts
+store: storeWrapper = defaultStore
+```
+Warehouse for data storage
 
-forceOverride: Boolean = false ignore the existing content of store and force override
+```ts
+prefix: string = ""
+```
+prefix for all storeKeys
+
+```ts
+forceOverride: boolean = false
+```
+ignore the existing content of store and force override

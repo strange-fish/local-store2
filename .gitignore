@@ -3,3 +3,4 @@ dist
 coverage
 temp
 .DS_Store
+yarn.lock

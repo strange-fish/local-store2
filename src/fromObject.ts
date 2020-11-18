@@ -17,7 +17,7 @@ export function fromObject<T extends Record<string, any>>(
       store.set(key, v)
     }
 
-    Object.defineProperty(obj, key, {
+    Object.defineProperty(obj, k, {
       get() {
         return store.get(key)
       },
